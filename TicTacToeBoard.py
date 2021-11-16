@@ -88,25 +88,25 @@ class TicTacToeBoard:
 
     def play(self):
         print(self.__player1 if self.__next_move == self.__symbol1 else self.__player2, "will start the game!")
-        winner_found = False
-        while not winner_found:
+        exit_condition = False
+        while not exit_condition:
             self.show_board()
             while True:
                 try:
                     print("Enter exit to exit game early!")
                     move = input("Enter your move as an x and y coordinate separated by a comma (x,y): ")
                     if move.strip().lower() == "exit":
+                        exit_condition = True
                         break
                     move_list = move.split(",")
                     if len(move_list) < 2:
                         raise Exception
+                    self.make_move(int(move_list[0].strip()), int(move_list[1].strip()))
                 except:
                     print("Invalid input!")
                 else:
                     break
-            self.make_move(int(move_list[0].strip()), int(move_list[1].strip()))
-            win_check = self.check_win_condition()
-            if win_check != False:
-                winner_found = True
-
-
+            if exit_condition:
+                break
+            else:
+                exit_condition = self.check_win_condition()
